@@ -4,10 +4,10 @@ const sendSms = require('./post-sms');
 
 
 app.post('/pickupready', (req, res) => {
-  req.body; // JavaScript object containing the parse JSON
+  let message = req.body; // take message from post
  
   sendSms('+18479626103', message);
-  res.json(req.body)
+  
   res.send('Got a POST request and I think I sent a message')
 })
 
