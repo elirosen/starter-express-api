@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const authToken = process.env.accountSid;
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send(accountSid);
 });
 
 app.listen(port, () => {
