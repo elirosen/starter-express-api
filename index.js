@@ -4,7 +4,7 @@ const port = 3000;
 const accountSid = process.env.accountSid;
 
 app.get('/', (req, res) => {
-  res.send(${accountSid});
+  res.send(accountSid);
 });
 
 app.listen(port, () => {
