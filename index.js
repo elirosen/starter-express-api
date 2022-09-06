@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express')
 const app = express()
 const sendSms = require('./post-sms');
@@ -7,7 +8,6 @@ app.use('/sendmessage', express.json({ limit: 100 }))
 
 // handle post request for path /sendmessage
 app.post('/sendmessage', (req, res) => {
-  const envelope = []
  
     // JSON payload is parsed to extract the message and number to send to 
 
@@ -17,7 +17,7 @@ app.post('/sendmessage', (req, res) => {
   sendSms(addressee, message);
 
   res.send('Got a POST request and I think I sent a message')
-  console.log(addressee + " " + message)
+
 
 })
 
