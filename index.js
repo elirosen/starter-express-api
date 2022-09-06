@@ -12,9 +12,9 @@ app.post('/sendmessage', (req, res) => {
     // JSON payload is parsed to extract the message and number to send to 
 
   const addressee = req.body.number
-  const message = req.body.message
+  const messageContent = req.body.message
 
-  sendSms(addressee, message);
+  sendSms(addressee, messageContent);
 
   res.send('Got a POST request and I think I sent a message')
 
