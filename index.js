@@ -18,7 +18,7 @@ app.post('/sendmessage', (req, res) => {
 
   res.send('Got a POST request and I think I sent a message')
 
-
+  console.log("attempted message to :" + addressee)
 })
 
 app.listen(process.env.PORT || 3000)
