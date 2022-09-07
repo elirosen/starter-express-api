@@ -11,7 +11,7 @@ app.post('/sendmessage', (req, res) => {
  
     // JSON payload is parsed to extract the message and number to send to 
 
-  const addressee = req.body.customer.number
+  const addressee = req.body.customer.phone
   const messageContent = "your order is ready for pickups"
 
   sendSms(addressee, messageContent);
