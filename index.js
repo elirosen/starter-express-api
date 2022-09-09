@@ -1,24 +1,32 @@
-const { response } = require('express');
-const express = require('express')
-const app = express()
-const sendSms = require('./post-sms');
+const express = require("express");
 
-// Attach the express.json middleware to route "/sendmessage"
-app.use('/sendmessage', express.json({ limit: 10000 }))
+const accountSid = process.env.accountSid;
+const authToken = process.env.authToken;
+const app = express();
+const client = require("twilio")(accountSid, authToken);
+app.use(express.json());
+app.use(express.static("public"));
 
-// handle post request for path /sendmessage
-app.post('/sendmessage', (req, res) => {
- 
-    // JSON payload is parsed to extract the message and number to send to 
+app.post("/sendSms", (req, res) => {
+  const ordernum = req.body.name
+  const message = "Your Nechamit's Treats order " + ordernum + " is ready for pickup";
+  client.messages
+    .create({
+      body: message,
+      from: process.env.TWILIO_PHONE_NUMBER,
+      to: req.body.customer.phone,
+    })
+    .then((message) => {
+      res.json({ message: message });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).json({ error: error.message });
+    });
+});
 
-  const addressee = req.body.customer.phone
-  const messageContent = "your order is ready for pickups"
+var port = process.env.PORT || 8000;
 
-  sendSms(addressee, messageContent);
-
-  res.send('Got a POST request and I think I sent a message')
-
-  console.log("attempted message to :" + addressee)
-})
-
-app.listen(process.env.PORT || 3000)
+app.listen(port, function () {
+  console.log('Example app listening on port ' + port + '!');
+});
