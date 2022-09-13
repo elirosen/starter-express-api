@@ -7,9 +7,42 @@ const client = require("twilio")(accountSid, authToken);
 app.use(express.json());
 app.use(express.static("public"));
 
+
+//function to check for delivery line_item 
+
+function checkForDeliveryLineItem(){
+  let z = req.body.line_items
+    for (let a in z) {
+      titles = z[a].title
+      console.log(titles)
+
+      if (titles === 'Delivery'){
+        foundDelivery = true
+        console.log("line item # " + a + " is: " + true)
+
+      }else {
+        foundDelivery = false
+        console.log("line item # " + a + " is: " + false)
+    }
+}
+return foundDelivery
+console.log("found delivery is: " + foundDelivery)
+
+}
+
+
 app.post("/sendSms", (req, res) => {
+
+// check for line item called Delivery
+checkForDeliveryLineItem()
+
+  //get the order number
   const ordernum = req.body.name
+
+  //message to send
   const message = "Your Nechamit's Treats order " + ordernum + " is ready for pickup";
+
+  //twilio call
   client.messages
     .create({
       body: message,
